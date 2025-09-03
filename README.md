@@ -1,6 +1,6 @@
 # Gesture Recognition Competition Solution
 
-This repository outlines the two primary modeling approaches used in CMI 2025 Competition: a feature-rich CatBoost model and a custom multi-branch 1D-CNN. The aim was to use sensor data to classify body-focused repetitive behaviors (BFRBs) and other gestures.
+This repository outlines the two primary modeling approaches used in CMI 2025 Competition: a feature-rich CatBoost model and a custom multi-branch 1D-CNN. The aim was to use sensor data to classify body-focused repetitive behaviors (BFRBs) and other gestures. Although I missed the chance of a silver medal from 70-90th place (approx. top %3) with wrong submission selection, this repo may give some useful feature engineering inspirations, especially on GBDT algorithms with signal processing.
 
 I started the competition with the CatBoost algorithm. After a month of testing, I switched to CNN models, and the performance increase was truly surprising. However, CatBoost was the addition that provided the largest increase in the ensemble phase.
 
