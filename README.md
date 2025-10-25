@@ -36,14 +36,14 @@ The final score is the average of the binary F1 and the macro F1 scores.
 - Sequence-based mean, std, and the difference between each of these for each measurement in the tof matrix.
 - Average of corner pixels, average of center pixels, and corner-to-center ratio.
 - Asymmetry ratio of right and left pixels.
-- Average, std, max, and min values for time intervals greater than 0.6 in the normalized time of the matrix divided into four parts.
+- Average, std, max, and min values for time intervals greater than 0.6 in the normalized time of the matrix, divided into four parts.
 - Average difference between each of the four parts for a matrix divided into four parts.
 
 ### Mixup:
 - 2x data by generating synthetic data from the existing measurements.
 
 ### Cross-validation Setup:
-- 5-fold MultilabelStratifiedKFold, grouped per subject, stratified on adult_child, handedness, and sex. Tried other cross-validation setups as well, this setup gave the lowest std across folds and consistency between oof score and leaderboard score.
+- 5-fold MultilabelStratifiedKFold, grouped per subject, stratified on adult_child, handedness, and sex. Tried other cross-validation setups as well, this setup gave the lowest std across folds and highest consistency between oof score and leaderboard score.
 
 ---
 
@@ -59,7 +59,7 @@ The final score is the average of the binary F1 and the macro F1 scores.
 *   **Angular Velocity and Distance:** Derived `angular_vel_x/y/z` and `angular_distance` directly from the raw quaternion time series to capture rotational speed and change.
 *   **Euler Features:** Converted quaternions to Euler angles (`roll`, `pitch`, `yaw`) and calculated their combined magnitude (`euler_mag`).
 *   **Rotation Matrix Features:** Extracted all nine elements (r11 to r33) from the 3D rotation matrix derived from quaternions to capture detailed spatial orientation.
-*   **Interaction Feature:** Created a `acc_angular_sync` feature by multiplying accelerometer and angular velocity magnitudes.
+*   **Interaction Feature:** Created an `acc_angular_sync` feature by multiplying the accelerometer and angular velocity magnitudes.
 
 ### Temporal and Rolling Window Features:
 *   **Normalized Temporal Position:** Created a `normalized_position` feature from 0 to 1 for each sequence, along with cyclical sin/cos transformations (`position_sin`, `position_cos`) for both first and second harmonics.
@@ -95,7 +95,7 @@ The final score is the average of the binary F1 and the macro F1 scores.
 ### Ensemble Strategy:
 * For single models, I took the majority voting of each fold model.
 * For the multi-model ensemble, took the mean of probabilities.
-* I used Catboost, my custom CNN architecture and some public models
+* I used Catboost, my custom CNN architecture, and some public models.
 
 ### Public Models:
 * https://www.kaggle.com/code/wasupandceacar/lb-0-841-5fold-single-model-with-split-sensors
