@@ -43,7 +43,7 @@ The final score is the average of the binary F1 and the macro F1 scores.
 - 2x data by generating synthetic data from the existing measurements.
 
 ### Cross-validation Setup:
-- 5-fold MultilabelStratifiedKFold, grouped per subject, stratified on adult_child, handedness, and sex.
+- 5-fold MultilabelStratifiedKFold, grouped per subject, stratified on adult_child, handedness, and sex. Tried other cross-validation setups as well, this setup gave the lowest std across folds and consistency between oof score and leaderboard score.
 
 ---
 
@@ -78,7 +78,7 @@ The final score is the average of the binary F1 and the macro F1 scores.
 
 ### Augmentation and Training Strategy:
 #### Mixup:
-*   Used a `MixupSequence` generator during training to create synthetic data. New samples were formed by taking weighted combinations of random sample pairs from each batch, controlled by an alpha parameter of 0.3.
+*   Used a `MixupSequence` generator during training to create synthetic data. New samples were formed by taking weighted combinations of random sample pairs from each batch, controlled by an alpha parameter of 0.3. This reduced the std across folds and gave better oof and leaderboard scores.
 
 #### Epoch Averaging:
 *   Implemented an epoch averaging callback to average the model's weights during the later stages of training. This was done to improve model generalization by simply taking the mean of several epochs.
@@ -87,7 +87,7 @@ The final score is the average of the binary F1 and the macro F1 scores.
 *   **Multi-Branch Input:** The model uses three parallel branches with different kernel sizes (`[3,3,3]`, `[7,5,3]`, `[15,11,7]`) to capture short, medium, and long-term temporal patterns simultaneously.
 *   **Branch Structure:** Each branch consists of a series of 1D Convolution, Batch Normalization, MaxPooling, and Dropout layers.
 *   **Fusion and Classification:** The outputs of the three branches are concatenated, passed through a final convolutional block, followed by Global Max Pooling, and then classified using two dense layers with Dropout.
-*   **Optimizer and Loss:** The model was trained using the AdamW optimizer and a Categorical Crossentropy loss function with label smoothing of 0.1.
+*   **Optimizer and Loss:** The model was trained using the AdamW optimizer and a Categorical Cross-Entropy loss function with label smoothing of 0.1.
 
 ### Cross-validation Setup:
 *   **5-fold MultilabelStratifiedKFold:** Grouped per `subject`, and stratified on `adult_child`, `handedness`, and `sex`.
